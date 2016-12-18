@@ -1,0 +1,6 @@
+com\caelum\tarefas\jdbc\ConnectionFactory.class
+com\caelum\tarefas\controller\OlaMundo.class
+com\caelum\tarefas\controller\TarefaController.class
+com\caelum\tarefas\modelo\Tarefa.class
+com\caelum\tarefas\dao\JdbcTarefaDao.class
+com\caelum\tarefas\controller\OlaMundoController.class
