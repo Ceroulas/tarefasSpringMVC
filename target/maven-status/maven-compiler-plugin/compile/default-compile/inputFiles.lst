@@ -1,6 +1,10 @@
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\jdbc\ConnectionFactory.java
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\controller\OlaMundo.java
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\dao\JdbcTarefaDao.java
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\controller\OlaMundoController.java
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\controller\TarefaController.java
-C:\Users\Aline\workspace\tarefas\src\com\caelum\tarefas\modelo\Tarefa.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/modelo/Usuario.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/modelo/Tarefa.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/interceptor/AutorizadorInterceptor.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/jdbc/ConnectionFactory.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/controller/TarefaController.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/dao/JdbcTarefaDao.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/controller/OlaMundoController.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/controller/LoginController.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/dao/JdbcUsuarioDao.java
+/home/ilegra000035/Documentos/projects/tarefasSpringMVC/src/com/caelum/tarefas/controller/OlaMundo.java
