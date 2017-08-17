@@ -20,15 +20,19 @@ public class JdbcTarefaDao {
 	}
 	
 	public void adiciona(Tarefa tarefa){
-		String sql = "insert into tarefas (descricao) " +
-				"values (?)";
-		
+		String sql = "insert into tarefas"+
+				"(descricao, finalizado, dataFinalizacao)"+
+				"values (?,?,?)";
+		PreparedStatement stmt;
 		try {
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, tarefa.getDescricao());
+			stmt.setBoolean(2, tarefa.isFinalizado());
+			System.out.println("date1: "+ tarefa.getDataFinalizacao().getTimeInMillis());
+			System.out.println("date2: "+ new Date(tarefa.getDataFinalizacao().getTimeInMillis()));
+			stmt.setDate(4, new Date(tarefa.getDataFinalizacao().getTimeInMillis()));
 			
 			stmt.execute();
-			stmt.close();
 		stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -39,24 +43,18 @@ public class JdbcTarefaDao {
 		List<Tarefa> tarefas = new ArrayList<Tarefa>();
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement("select * from tarefas");
+			PreparedStatement stmt = connection.prepareStatement("select * from contatos");
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()){
 				Tarefa tarefa = new Tarefa();
-				tarefa.setId(rs.getLong("id"));
 				tarefa.setDescricao(rs.getString("descricao"));
 				tarefa.setFinalizado(rs.getBoolean("finalizado"));
+				Calendar date = Calendar.getInstance();
 				
-				if(rs.getDate("dataFinalizacao") != null)
-				{
-					//montando data atraves do calendar
-					Calendar dataFinalizacao = Calendar.getInstance();
-					dataFinalizacao.setTime(rs.getDate("dataFinalizacao"));
-					
-					tarefa.setDataFinalizacao(dataFinalizacao);
-				}
-				//adicionar objeto a lista
+				date.setTime(rs.getDate("dataFinalizacao"));
+				tarefa.setDataFinalizacao(date);
+				
 				tarefas.add(tarefa);
 			}
 			stmt.close();
@@ -69,24 +67,16 @@ public class JdbcTarefaDao {
 	}
 	
 	public void altera(Tarefa tarefa){
-		String sql = "update tarefas set descricao=?, finalizado=?, dataFinalizacao=? where id=?";
+		String sql = "update tarefas set descricao=?, finaliza=?, dataFinalizacao=? where id=?";
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			System.out.println("Descricao: "+ tarefa.getDescricao());
+
 			stmt.setString(1, tarefa.getDescricao());
 			stmt.setBoolean(2, tarefa.isFinalizado());
-			if(tarefa.getDataFinalizacao() != null)
-			{
-				stmt.setDate(3, new Date
-					(tarefa.getDataFinalizacao().getTimeInMillis()));
-			}
-			else
-			{
-				stmt.setDate(3, null);
-			}
-			
-			stmt.setLong(4, tarefa.getId());
+			stmt.setDate(4, new Date(tarefa.getDataFinalizacao().getTimeInMillis()));
+
+			stmt.setLong(5, tarefa.getId());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -105,66 +95,4 @@ public class JdbcTarefaDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public Tarefa buscaPorId(Long id){
-		
-		try{
-			PreparedStatement stmt = this.connection.prepareStatement("select * from tarefas");
-			ResultSet rs = stmt.executeQuery();
-			
-			while(rs.next())
-			{
-				//System.out.println(rs.getLong("id")+ " // " + id);
-				if(id == rs.getLong("id"))
-				{
-					//criando objeto tarefa
-					Tarefa tarefa = new Tarefa();
-					tarefa.setId(rs.getLong("id"));
-					tarefa.setDescricao(rs.getString("descricao"));
-					tarefa.setFinalizado(rs.getBoolean("finalizado"));
-					
-					if(rs.getDate("dataFinalizacao") != null)
-					{
-						//montando data atraves do calendar
-						Calendar dataFinalizacao = Calendar.getInstance();
-						dataFinalizacao.setTime(rs.getDate("dataFinalizacao"));
-					
-						tarefa.setDataFinalizacao(dataFinalizacao);
-					}
-					System.out.println("retornada tarefa:"+tarefa.getId());
-					return tarefa;
-				}
-			}
-				return null;
-			}catch(SQLException e){
-				throw new RuntimeException(e);
-			}	
-	}
-	
-	public void finaliza(Long id){
-		
-		Tarefa tarefa = new JdbcTarefaDao().buscaPorId(id);
-		
-		String sql = "update tarefas set finalizado=?, dataFinalizacao=? where id=?";
-		
-		try{
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			
-			stmt.setBoolean(1, true);
-			
-			stmt.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
-			
-			stmt.setLong(3, tarefa.getId());
-				
-			stmt.execute();
-			stmt.close();
-			
-			System.out.println("DADOS ALTERADOS COM SUCESSO!");
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-	}
 }
-
-
-
